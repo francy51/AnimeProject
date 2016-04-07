@@ -3,11 +3,12 @@ using UnityEngine;
 using System.Collections;
 
 namespace Project.ItemSystem.Editor {
-	public class ISQualityDataEditor : EditorWindow {
+	public partial class ISQualityDataEditor : EditorWindow {
 
 		ISQualityDatabase QualDB;
 		ISQuality selectedItem;
 		Texture2D selectedTexture;
+		Vector2 _srollPos;
 
 		const int SPRITE_BTN_SIZE = 92;
 		const string DATABASE_PATH = @"Assets/Systems/Item System/scripts/database/Actual Database/ISQUALITYDATABASE";
@@ -62,6 +63,9 @@ namespace Project.ItemSystem.Editor {
 				
 			if (GUILayout.Button ("Save")) {
 				if (selectedItem == null)
+					return;
+
+				if (selectedItem.QName == "")
 					return;
 
 				QualDB.Database.Add (selectedItem);

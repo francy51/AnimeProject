@@ -22,7 +22,7 @@ namespace Project.ItemSystem {
 		}
 
 		public ISQuality(){
-			_name = "common";
+			_name = "";
 			_icon = new Sprite ();
 		}
 		#endregion
