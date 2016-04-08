@@ -8,7 +8,7 @@ namespace Project.ItemSystem.Editor {
 		//list all stored qualities
 		void ListView(){
 			
-			EditorGUILayout.BeginScrollView (_srollPos, GUILayout.ExpandHeight(true));
+			_scrollPos = EditorGUILayout.BeginScrollView (_scrollPos, GUILayout.ExpandHeight(true));
 			DisplayQualities ();
 			EditorGUILayout.EndScrollView ();
 
@@ -18,13 +18,62 @@ namespace Project.ItemSystem.Editor {
 
 
 		void DisplayQualities (){
+			GUILayout.Label ("The Database has " + QualDB.Count +  " entries");
+		
+			for (int cnt = 0; cnt < QualDB.Count; cnt++) {
 
-			for (int cnt = 0; cnt < QualDB.Count; cnt++){
-				GUILayout.Label(QualDB.Get(cnt).QName);
-				GUILayout.Button ("x");
+
+				//display enty number
+				GUILayout.Label ("Entry number " + cnt);
+
+
+
+				//display Name in list
+				GUILayout.Label ("Quality Name: ");
+
+				QualDB.Get (cnt).QName = GUILayout.TextArea (QualDB.Get (cnt).QName);
+
+
+
+
+				//Display icons in list
+
+
+				GUILayout.Label ("Quality Icon: ");
+
+				if (QualDB.Get (cnt).QIcon)
+					selectedTexture = QualDB.Get(cnt).QIcon.texture;
+				else
+					selectedTexture = null;
+
+				if (GUILayout.Button (selectedTexture, GUILayout.Width (SPRITE_BTN_SIZE), GUILayout.Height (SPRITE_BTN_SIZE))) {
+						
+					int controlerID = EditorGUIUtility.GetControlID (FocusType.Passive);
+					EditorGUIUtility.ShowObjectPicker<Sprite> (null, true, null, controlerID);
+					selectedIndex = cnt;
+				}
+			
+
+				string commanName = Event.current.commandName;
+				if (commanName == "ObjectSelectorUpdated") {
+
+					if (selectedIndex == -1)
+						return;
+
+					QualDB.Get(selectedIndex).QIcon = (Sprite)EditorGUIUtility.GetObjectPickerObject ();
+					selectedIndex = -1;
+					Repaint ();
+
+				}
+
+
+
+
+				//Delete Button
+				if (GUILayout.Button ("DELETE")) {
+					QualDB.RemoveAt (cnt);
+				}	
 			}
-
 		}
-
 	}
 }

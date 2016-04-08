@@ -8,10 +8,12 @@ namespace Project.ItemSystem.Editor {
 		ISQualityDatabase QualDB;
 		ISQuality selectedItem;
 		Texture2D selectedTexture;
-		Vector2 _srollPos;
+		int selectedIndex = -1;
+		Vector2 _scrollPos;
+
 
 		const int SPRITE_BTN_SIZE = 92;
-		const string DATABASE_PATH = @"Assets/Systems/Item System/scripts/database/Actual Database/ISQUALITYDATABASE";
+		const string DATABASE_PATH = @"Assets/Systems/Item System/scripts/database/Actual Database/ISQUALITYDATABASE.asset";
 
 		[MenuItem("Editors/databases/quality editor")]
 		public static void init(){
@@ -35,7 +37,7 @@ namespace Project.ItemSystem.Editor {
 		}
 
 		void OnGUI(){
-			AddQualityToDatabase ();
+				AddQualityToDatabase ();
 			ListView ();
 		}
 
@@ -71,7 +73,7 @@ namespace Project.ItemSystem.Editor {
 
 				QualDB.Add(selectedItem);
 
-				selectedItem = new ISQuality();
+				selectedItem = new ISQuality(); 
 			}
 
 		}

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Project.ItemSystem {
 	public class ISQualityDatabase : ScriptableObject {
 
-		[SerializeField]List<ISQuality> Database = new List<ISQuality> ();
+		 List<ISQuality> Database = new List<ISQuality> ();
 
 
 		public void Add(ISQuality item){
