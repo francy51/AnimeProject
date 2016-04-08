@@ -18,7 +18,7 @@ namespace Project.ItemSystem.Editor {
 
 			ISQualityDataEditor window = EditorWindow.GetWindow<ISQualityDataEditor> ();
 			window.minSize = new Vector2 (400, 300);
-			window.title = "Quality Database";
+			window.titleContent.text = "Quality Database";
 			window.Show ();
 		
 		}
@@ -36,6 +36,7 @@ namespace Project.ItemSystem.Editor {
 
 		void OnGUI(){
 			AddQualityToDatabase ();
+			ListView ();
 		}
 
 
@@ -68,7 +69,7 @@ namespace Project.ItemSystem.Editor {
 				if (selectedItem.QName == "")
 					return;
 
-				QualDB.Database.Add (selectedItem);
+				QualDB.Add(selectedItem);
 
 				selectedItem = new ISQuality();
 			}

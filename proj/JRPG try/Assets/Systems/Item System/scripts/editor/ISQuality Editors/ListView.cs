@@ -9,6 +9,7 @@ namespace Project.ItemSystem.Editor {
 		void ListView(){
 			
 			EditorGUILayout.BeginScrollView (_srollPos, GUILayout.ExpandHeight(true));
+			DisplayQualities ();
 			EditorGUILayout.EndScrollView ();
 
 		
@@ -18,8 +19,9 @@ namespace Project.ItemSystem.Editor {
 
 		void DisplayQualities (){
 
-			for (int cnt = 0; cnt < QualDB.Database.Count; cnt++){
-//				GUILayout.Label(QualDB.Database.);
+			for (int cnt = 0; cnt < QualDB.Count; cnt++){
+				GUILayout.Label(QualDB.Get(cnt).QName);
+				GUILayout.Button ("x");
 			}
 
 		}
