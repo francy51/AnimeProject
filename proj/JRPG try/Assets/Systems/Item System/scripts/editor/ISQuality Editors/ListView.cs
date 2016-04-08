@@ -18,7 +18,7 @@ namespace Project.ItemSystem.Editor {
 
 
 		void DisplayQualities (){
-			GUILayout.Label ("The Database has " + QualDB.Count +  " entries");
+			
 		
 			for (int cnt = 0; cnt < QualDB.Count; cnt++) {
 
@@ -65,15 +65,16 @@ namespace Project.ItemSystem.Editor {
 					Repaint ();
 
 				}
-
-
-
-
+					
 				//Delete Button
 				if (GUILayout.Button ("DELETE")) {
 					QualDB.RemoveAt (cnt);
 				}	
 			}
+		}
+
+		public void DatabaseInfo(){
+			GUILayout.Label ("The Database has " + QualDB.Count +  " entries");
 		}
 	}
 }

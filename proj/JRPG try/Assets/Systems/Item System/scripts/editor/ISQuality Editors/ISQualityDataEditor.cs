@@ -37,8 +37,9 @@ namespace Project.ItemSystem.Editor {
 		}
 
 		void OnGUI(){
-				AddQualityToDatabase ();
+			AddQualityToDatabase ();
 			ListView ();
+			DatabaseInfo ();
 		}
 
 

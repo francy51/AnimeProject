@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 namespace Project.ItemSystem {
 		
-		public class ISQuality : IISQuality {
+	[Serializable]public class ISQuality : IISQuality {
 		//	_ = private variables
 		[SerializeField]string _name;
 		[SerializeField]Sprite _icon;

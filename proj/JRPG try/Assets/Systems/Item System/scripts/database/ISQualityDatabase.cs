@@ -1,5 +1,6 @@
 ﻿using UnityEditor;
 using UnityEngine;
+using System;
 using System.Linq; //use for elementAT
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Collections.Generic;
 namespace Project.ItemSystem {
 	public class ISQualityDatabase : ScriptableObject {
 
-		 List<ISQuality> Database = new List<ISQuality> ();
+		[SerializeField] List<ISQuality> Database = new List<ISQuality> ();
 
 
 		public void Add(ISQuality item){
