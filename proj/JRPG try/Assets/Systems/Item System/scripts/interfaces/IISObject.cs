@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
 namespace Project.ItemSystem {
+
 	public interface IISObject {
 
 

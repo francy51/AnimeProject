@@ -6,6 +6,7 @@ namespace Project.ItemSystem {
 			
 		string SlotName { get; set; }
 
+		Sprite SlotIcon { get; set; }
 	
 	}
 }
