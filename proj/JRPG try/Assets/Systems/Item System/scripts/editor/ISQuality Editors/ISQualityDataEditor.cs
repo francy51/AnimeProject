@@ -13,7 +13,9 @@ namespace Project.ItemSystem.Editor {
 
 
 		const int SPRITE_BTN_SIZE = 92;
-		const string DATABASE_PATH = @"Assets/Systems/Item System/scripts/database/Actual Database/ISQUALITYDATABASE.asset";
+		const string DATABASE_FULL_PATH = @"Assets/Systems/Item System/scripts/database/Actual Database/ISQUALITYDATABASE.asset";
+		const string DATABASE_PATH = @"Systems/Item System/scripts/database/Actual Database";
+		const string DATABASE_NAME = @"ISQUALITYDATABASE.asset";
 
 		[MenuItem("Editors/databases/quality editor")]
 		public static void init(){
@@ -26,57 +28,23 @@ namespace Project.ItemSystem.Editor {
 		}
 
 		void OnEnable(){
-			QualDB = AssetDatabase.LoadAssetAtPath (DATABASE_PATH, typeof(ISQualityDatabase)) as ISQualityDatabase;
-			if(QualDB == null){
-				QualDB = ScriptableObject.CreateInstance<ISQualityDatabase> ();
-				AssetDatabase.CreateAsset (QualDB,DATABASE_PATH);
-				AssetDatabase.SaveAssets ();
-				AssetDatabase.Refresh ();
-			}
-			selectedItem = new ISQuality();
+			if(QualDB == null)
+			QualDB = ISQualityDatabase.GetDatabase<ISQualityDatabase> (DATABASE_PATH, DATABASE_NAME);
+	//		selectedItem = new ISQuality();
 		}
 
 		void OnGUI(){
-			AddQualityToDatabase ();
-			ListView ();
 			DatabaseInfo ();
+			ListView ();
+			AddItem ();
 		}
 
-
-		void AddQualityToDatabase(){
-
-			//name
-			selectedItem.QName = EditorGUILayout.TextField(selectedItem.QName);
-			//icon
-			if (selectedItem.QIcon)
-				selectedTexture = selectedItem.QIcon.texture;
-			else
-				selectedTexture = null;
-
-			if(GUILayout.Button (selectedTexture,GUILayout.Width(SPRITE_BTN_SIZE),GUILayout.Height(SPRITE_BTN_SIZE))){
-
-				int controlerID = EditorGUIUtility.GetControlID (FocusType.Passive);
-				EditorGUIUtility.ShowObjectPicker<Sprite> (null, true, null, controlerID);
-			}
-
-			string commanName = Event.current.commandName;
-			if (commanName == "ObjectSelectorUpdated") {
-				selectedItem.QIcon = (Sprite)EditorGUIUtility.GetObjectPickerObject ();
-				Repaint ();
-			}
-				
-			if (GUILayout.Button ("Save")) {
-				if (selectedItem == null)
-					return;
-
-				if (selectedItem.QName == "")
-					return;
-
-				QualDB.Add(selectedItem);
-
-				selectedItem = new ISQuality(); 
-			}
-
+		void AddItem(){
+		
+			if (GUILayout.Button ("ADD"))
+				QualDB.Add (new ISQuality ());
+		
 		}
+
 	}
 }

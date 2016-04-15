@@ -5,7 +5,7 @@ using System.Collections;
 namespace Project.ItemSystem {
 		public interface IISEquipable  {
 
-			ISEquipmentSlot EquipmentSlot { get; set; }
+			ISEquipmentSlot EquipmentSlot { get;}
 			bool Equip();
 		}
 }

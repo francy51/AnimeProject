@@ -2,7 +2,5 @@
 using System.Collections;
 
 namespace Project.ItemSystem {
-	public class ISObjectDatabase : ScriptableObject {
-
-	}
+	public class ISObjectDatabase : ScriptableObjectDatabase<ISObject> {}
 }

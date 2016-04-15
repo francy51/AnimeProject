@@ -4,7 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
 
-namespace Project {
+namespace Project.ItemSystem  {
 	public class ScriptableObjectDatabase<T> : ScriptableObject where T: class {
 
 		[SerializeField] List<T> database = new List<T>();	
@@ -56,20 +56,27 @@ namespace Project {
 		}
 
 
-		public U GetDatabase<U>(string dbPath,string dbName) where U:ScriptableObject{
+		public static U GetDatabase<U>(string dbPath,string dbName) where U:ScriptableObject{
 
-			string dbFullPath = @"Assets"
+			string dbFullPath = @"Assets/" + dbPath + "/" + dbName;
+
 
 			
 
-			database = AssetDatabase.LoadAssetAtPath (DATABASE_PATH, typeof(ISQualityDatabase)) as ISQualityDatabase;
-			if(database == null){
-				database = ScriptableObject.CreateInstance<T> ();
-				AssetDatabase.CreateAsset (database,DATABASE_PATH);
+			U db = AssetDatabase.LoadAssetAtPath (dbFullPath, typeof(U)) as U;
+			if(db == null){
+				//check for folder
+				if(!AssetDatabase.IsValidFolder(@"Assets/" + dbPath))
+					AssetDatabase.CreateFolder(@"Assets/" , dbPath);
+
+				//creat and refresh database1
+				db = ScriptableObject.CreateInstance<U> ();
+				AssetDatabase.CreateAsset (db,dbFullPath);
 				AssetDatabase.SaveAssets ();
 				AssetDatabase.Refresh ();
 			}
-			
+			return db;
+
 		}
 
 	}

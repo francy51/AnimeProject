@@ -12,7 +12,7 @@ namespace Project.ItemSystem {
 		//taking damage
 		void DurabilityDamage (int amount);
 
-		void Brake();
+		void Break();
 
 		//repairing
 		void Repair();
