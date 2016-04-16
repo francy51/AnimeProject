@@ -98,9 +98,31 @@ namespace Project.ItemSystem {
 
 		#endregion
 
-		public void OnGUI(){
+		public override void OnGUI(){
+
+			EditorGUILayout.BeginVertical ();
+			base.OnGUI ();
+			_minDamage = EditorGUILayout.IntField ("Min Damage -", _minDamage);
+			_durability = EditorGUILayout.IntField ("Durability -", _durability);
+			_maxDurability = EditorGUILayout.IntField ("Max Durabilty -", _maxDurability);
+			DisplayEquipmentSlot ();
+			DisplayPrefab ();
+			EditorGUILayout.EndVertical ();
 		
-			ISName = EditorGUILayout.TextField ("Name - " , ISName );
+		
+		}
+
+
+		public void DisplayEquipmentSlot(){
+		
+			GUILayout.Label("Equipment Slot");
+
+		}
+
+
+		public void DisplayPrefab(){
+		
+			GUILayout.Label ("Prefab");
 		
 		}
 

@@ -14,7 +14,7 @@ namespace Project.ItemSystem.Editor {
 			GUILayout.BeginVertical ("Box",GUILayout.ExpandWidth(true),GUILayout.ExpandHeight(true));
 			GUILayout.BeginHorizontal ("Box",GUILayout.ExpandWidth(true),GUILayout.ExpandHeight(true));
 
-			GUILayout.Label ("Detail View");
+				
 			if (showWeaponDetails)
 				DisplayNewWeapon ();
 		

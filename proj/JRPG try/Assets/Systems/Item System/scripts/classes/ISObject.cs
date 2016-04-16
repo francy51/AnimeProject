@@ -1,4 +1,5 @@
-﻿using System;
+﻿using UnityEditor;
+using System;
 using UnityEngine;
 using System.Collections;
 
@@ -46,6 +47,35 @@ namespace Project.ItemSystem {
 		}
 
 		#endregion
+
+
+		//ONGUI
+
+		public virtual void OnGUI(){
+
+			_name = EditorGUILayout.TextField ("Name - ", _name);
+			_goldValue = EditorGUILayout.IntField ("Gold Value - " , _goldValue );
+			_powerValue = EditorGUILayout.IntField ("Power Value - " , _powerValue );
+			_weight = EditorGUILayout.IntField ("Weight - " , _weight );
+			DisplayIcon ();
+			DisplayQuality ();
+
+
+		}
+
+		public void DisplayIcon(){
+
+			GUILayout.Label("Icon");
+
+		}
+
+		public void DisplayQuality(){
+		
+			GUILayout.Label ("Quality");
+
+		}
+
+
 
 
 	}
