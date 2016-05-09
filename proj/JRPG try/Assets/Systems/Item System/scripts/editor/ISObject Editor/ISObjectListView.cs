@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections;
 
-namespace Project.ItemSystem.Editor {
+namespace Project.ItemSystem {
 	public partial class ISObjectEditor  {
 
 		Vector2 _scrollPos = Vector2.zero;

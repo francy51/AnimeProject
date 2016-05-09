@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Project.ItemSystem.Editor {
+namespace Project.ItemSystem {
 	public partial class ISObjectEditor  {
 
 		void BotBar(){

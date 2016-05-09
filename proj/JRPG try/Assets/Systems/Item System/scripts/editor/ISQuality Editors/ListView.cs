@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections;
 
-namespace Project.ItemSystem.Editor {
+namespace Project.ItemSystem {
 	public partial class ISQualityDataEditor  {
 
 		//list all stored qualities

@@ -49,7 +49,14 @@ namespace Project.ItemSystem {
 		#endregion
 
 
-		//ONGUI
+		//ONGUI Place in other class further ON
+		ISQualityDatabase QDB;
+		int qualitySelectedIndex = 0;
+		public int qualitySelectedID {
+			get{ return qualitySelectedIndex;}
+		}	
+		string[] Option;	
+	
 
 		public virtual void OnGUI(){
 
@@ -69,9 +76,28 @@ namespace Project.ItemSystem {
 
 		}
 
+
+		public ISObject(){
+
+			 string DATABASE_PATH = @"Systems/Item System/scripts/database/Actual Database";
+			 string DATABASE_NAME = @"ISQUALITYDATABASE.asset";
+			if(QDB == null)
+				QDB = ISQualityDatabase.GetDatabase<ISQualityDatabase> (DATABASE_PATH, DATABASE_NAME);
+
+			Option = new string[QDB.Count];
+			for(int cnt = 0; cnt < QDB.Count; cnt++){
+				Option [cnt] = QDB.Get (cnt).QName;
+			}
+
+
+		}
+
+
+
 		public void DisplayQuality(){
-		
+			
 			GUILayout.Label ("Quality");
+			qualitySelectedIndex = EditorGUILayout.Popup("Quality", qualitySelectedIndex,Option);
 
 		}
 

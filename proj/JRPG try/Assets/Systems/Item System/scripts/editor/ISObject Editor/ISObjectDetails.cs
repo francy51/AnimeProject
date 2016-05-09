@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections;
 
-namespace Project.ItemSystem.Editor {
+namespace Project.ItemSystem {
 		public partial class ISObjectEditor {
 
 		ISWeapon TempWeapon;
@@ -43,14 +43,21 @@ namespace Project.ItemSystem.Editor {
 
 			if (!showWeaponDetails) {
 				if (GUILayout.Button ("Create Weapon")) {	
-					Debug.Log ("created a weapon");
 					TempWeapon = new ISWeapon ();
+
+				
 					showWeaponDetails = true;
 				}
 			} else {
 
 				if (GUILayout.Button ("Save")) {
 					Debug.Log ("weapon saved");
+					ISQualityDatabase QDB;
+					string DATABASE_PATH = @"Systems/Item System/scripts/database/Actual Database";
+					string DATABASE_NAME = @"ISQUALITYDATABASE.asset";
+						QDB = ISQualityDatabase.GetDatabase<ISQualityDatabase> (DATABASE_PATH, DATABASE_NAME);
+					TempWeapon.ISQuality = QDB.Get (TempWeapon.qualitySelectedID);
+					WeaponDB.Add (TempWeapon);
 					showWeaponDetails = false;
 					TempWeapon = null;
 				}

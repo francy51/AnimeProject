@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections;
 
-namespace Project.ItemSystem.Editor {
+namespace Project.ItemSystem {
 	public partial class ISQualityDataEditor : EditorWindow {
 
 		ISQualityDatabase QualDB;

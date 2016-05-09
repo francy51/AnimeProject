@@ -123,6 +123,7 @@ namespace Project.ItemSystem {
 		public void DisplayPrefab(){
 		
 			GUILayout.Label ("Prefab");
+
 		
 		}
 
