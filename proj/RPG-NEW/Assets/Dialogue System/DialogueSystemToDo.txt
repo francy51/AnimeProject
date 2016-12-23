@@ -1,0 +1,22 @@
+﻿What is this system?
+
+This system controls all dialogue between the player and npcs. This system also takes care of responses that the player does.
+This system and the quest system have to be linked somehow.
+
+To Decide - How to handle player responses
+
+Todo in this system
+	--Things that need to be decided or done (* means "urgent")--
+	- Decide How to handle player responses*	
+	- Create graphics for the text output
+	- Optimize the distibution of the different dialogues 
+		- Create central "database" with responses 
+		- Have an npc choose between possible things to say based on npc type 
+			eg.Peasants pick lines taged for peasants and a Priest picks lines taged for priests
+		
+
+	--All the following can be done once the system is deemed as almost finished--
+	- populate database and run tests on it to make sure it works
+	- optimize how npcs access the database and how responses are handled
+
+	--Once all is finished procede to polish all the code and make the game run as smooth as possible--

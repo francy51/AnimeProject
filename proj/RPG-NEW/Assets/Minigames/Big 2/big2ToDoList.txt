@@ -1,0 +1,20 @@
+﻿This system will handle the big 2 minigame.
+
+Each card will be given a value. 
+2 will have the highest value.
+3 will have the lowest value.
+When someone starts the "round" by placing the first card
+	- detect the "card type" eg. single,pair,triple ect.
+	- detect the card value
+	- and place the "round starter"
+
+When someone places a card down.
+	- It detects the new highest value.
+	- It places the "round starter on the player that places the card down.
+
+When the player with the "round starter" has his turn come back that is onsidered as the round end and
+the process is repeated.
+
+After everyturn the player is checked if they have an empty hand.
+	- If they have an empty hand they win
+	- Otherwise they are ignored

@@ -1,0 +1,27 @@
+﻿What is this system?
+
+This system will take care of all player stats both passive(to do with interactions with the world) and active(to do 
+with combat and movement speed ect.).
+
+To Decide - How to handle leveling inside player stat system or create seperate system.
+
+Todo in this system
+	--Things that need to be decided or done (* means "urgent")--
+	- Decide how to save the playerStats when game closed*	
+	- If choose to include leveling into this system then create the necesary functions and UI featues
+	- Decide how to link abilities with profession choice*
+	- Implement professions( The profession you "equip" decides what active base stats you have)
+		- EG.
+		- Equip thief profession
+		- strength = 2
+		- speed = 0.8f
+		- Change and equip warrior pofession
+		- strength = 6
+		- speed = 0.3f
+		ect.
+
+	--All the following can be done once the system is deemed as almost finished--
+	- Create a initial player profesion and job scene
+	- Add other classes(both active and passive options)
+
+	--Once all is finished procede to polish all the code and make the game run as smooth as possible--
