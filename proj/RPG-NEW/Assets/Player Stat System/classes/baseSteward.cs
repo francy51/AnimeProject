@@ -9,7 +9,7 @@ namespace Project.StatSystem
 
         public GameObject player;
         playerStats stats;
-   
+
         float _charisma;
 
         float _martial;
@@ -19,21 +19,21 @@ namespace Project.StatSystem
         float _intrigue;
 
         float _diplomacy;
-        
+
         float _stewardship;
 
         int _prestige;
 
         void Start()
         {
-            stats = player.GetComponent<playerStats>();
+            stats = FindObjectOfType<playerStats>().GetComponent<playerStats>();
             _martial = .05f;
             _learning = .3f;
             _stewardship = .5f;
             _charisma = .3f;
             _intrigue = .2f;
             _diplomacy = .2f;
-            _prestige = 50;        
+            _prestige = 50;
         }
 
         public void onActivate()

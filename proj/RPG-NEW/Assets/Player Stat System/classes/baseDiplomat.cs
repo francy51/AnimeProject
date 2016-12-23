@@ -24,7 +24,7 @@ namespace Project.StatSystem
 
         void Start()
         {
-            stats = player.GetComponent<playerStats>();
+            stats = FindObjectOfType<playerStats>().GetComponent<playerStats>();
             _martial = .05f;
             _learning = .4f;
             _stewardship = .2f;

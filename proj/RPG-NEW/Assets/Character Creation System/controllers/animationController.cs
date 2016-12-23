@@ -1,36 +1,52 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class animationController : MonoBehaviour {
 
-    public Animator FemaleAnim;
-    public Animator MaleAnim;
-    float animSpeed;
-    bool selectedCharacter; 
+namespace Project.CharacterCreation
+{
+    public class animationController : MonoBehaviour
+    {
 
-	// Use this for initialization
-	void Start () {
-        	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        if (!selectedCharacter)
+        public Animator FemaleAnim;
+        public Animator MaleAnim;
+        public GameObject male;
+        public GameObject female;
+        float animSpeed;
+        CharacterCreationManager manager;
+
+        // Use this for initialization
+        void Start()
         {
-            FemaleAnim.SetBool("chosenCharacter", false);
-            MaleAnim.SetBool("chosenCharacter", false);
-            animSpeed+=.1f;
-            if (animSpeed > 10000f)
+            manager = GetComponent<CharacterCreationManager>();
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            if (manager.choosingCharacter)
             {
-                animSpeed = 0f;
+                FemaleAnim.SetFloat("Blend", 1f);
+                MaleAnim.SetFloat("Blend", 1f);
             }
-            FemaleAnim.SetFloat("Blend", animSpeed);
-            MaleAnim.SetFloat("Blend", animSpeed);
         }
-        else
+
+        public GameObject characterSelected (GameObject trigger)
         {
-            FemaleAnim.SetBool("chosenCharacter", true);
-            MaleAnim.SetBool("chosenCharacter", true);
+            if (trigger.name == male.name)
+            {
+                MaleAnim.SetBool("chosenCharacter", true);
+                female.SetActive(false);
+                return male;
+            }
+            else if (trigger.name == female.name)
+            {
+                FemaleAnim.SetBool("chosenCharacter", true);
+                male.SetActive(false);
+                return female;
+            }
+            else
+                return null;
         }
-	}
+
+    }
 }
