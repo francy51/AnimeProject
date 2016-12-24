@@ -5,13 +5,11 @@ using System;
 
 namespace Project.StatSystem
 {
-    public class playerStats : MonoBehaviour, IPSplayerActiveStats, IPSplayerPassiveStats
+    public class playerStats : MonoBehaviour, IPSplayerActiveStats, IPSplayerPassiveStats, IPSplayerAvatar
     {
 
-        public Text[] texts;
-
         #region implementing interfaces + variables
-
+        [SerializeField]
         int _armor;
 
         public int Armor
@@ -26,7 +24,7 @@ namespace Project.StatSystem
                 _armor = value;
             }
         }
-
+        [SerializeField]
         float _attackSpeed;
 
         public float AttackSpeed
@@ -41,7 +39,7 @@ namespace Project.StatSystem
                 _attackSpeed = value;
             }
         }
-
+        [SerializeField]
         int _curDodges;
 
         public int curDodges
@@ -56,7 +54,7 @@ namespace Project.StatSystem
                 _curDodges = value;
             }
         }
-
+        [SerializeField]
         int _curHealth;
 
         public int curHealth
@@ -71,7 +69,7 @@ namespace Project.StatSystem
                 _curHealth = value;
             }
         }
-
+        [SerializeField]
         float _dodgeRegen;
 
         public float DodgeRegen
@@ -86,7 +84,7 @@ namespace Project.StatSystem
                 _dodgeRegen = value;
             }
         }
-
+        [SerializeField]
         float _healthRegen;
 
         public float HealthRegen
@@ -101,7 +99,7 @@ namespace Project.StatSystem
                 _healthRegen = value;
             }
         }
-
+        [SerializeField]
         int _intelligence;
 
         public int Intelligence
@@ -116,7 +114,7 @@ namespace Project.StatSystem
                 _intelligence = value;
             }
         }
-
+        [SerializeField]
         int _maxDodges;
 
         public int maxDodges
@@ -131,7 +129,7 @@ namespace Project.StatSystem
                 _maxDodges = value;
             }
         }
-
+        [SerializeField]
         int _maxHealth;
 
         public int maxHealth
@@ -146,7 +144,7 @@ namespace Project.StatSystem
                 _maxHealth = value;
             }
         }
-
+        [SerializeField]
         int _shield;
 
         public int Shield
@@ -161,7 +159,7 @@ namespace Project.StatSystem
                 _shield = value;
             }
         }
-
+        [SerializeField]
         float _speed;
 
         public float Speed
@@ -176,7 +174,7 @@ namespace Project.StatSystem
                 _speed = value;
             }
         }
-
+        [SerializeField]
         int _strength;
 
         public int Strength
@@ -191,7 +189,7 @@ namespace Project.StatSystem
                 _strength = value;
             }
         }
-
+        [SerializeField]
         float _charisma;
 
         public float Charisma
@@ -206,7 +204,7 @@ namespace Project.StatSystem
                 _charisma = value;
             }
         }
-
+        [SerializeField]
         float _martial;
 
         public float Martial
@@ -221,7 +219,7 @@ namespace Project.StatSystem
                 _martial = value;
             }
         }
-
+        [SerializeField]
         float _learning;
 
         public float Learning
@@ -236,7 +234,7 @@ namespace Project.StatSystem
                 _learning = value;
             }
         }
-
+        [SerializeField]
         float _intrigue;
 
         public float Intrigue
@@ -251,7 +249,7 @@ namespace Project.StatSystem
                 _intrigue = value;
             }
         }
-
+        [SerializeField]
         float _diplomacy;
 
         public float Diplomacy
@@ -267,6 +265,7 @@ namespace Project.StatSystem
             }
         }
 
+        [SerializeField]
         float _stewardship;
 
         public float Stewardship
@@ -281,7 +280,7 @@ namespace Project.StatSystem
                 _stewardship = value;
             }
         }
-
+        [SerializeField]
         int _prestige;
 
         public int Prestige
@@ -296,31 +295,37 @@ namespace Project.StatSystem
                 _prestige = value;
             }
         }
-        #endregion
+        [SerializeField]
+        GameObject _prefab;
 
-        void Update()
+        public GameObject Prefab
         {
-            texts[0].text = "martial - " + _martial;
-            texts[1].text = "learning - " + _learning;
-            texts[2].text = "intrigue - " + _intrigue;
-            texts[3].text = "charisma - " + _charisma;
-            texts[4].text = "stewardship - " + _stewardship;
-            texts[5].text = "diplomacy - " + _diplomacy;
-            texts[6].text = "prestige - " + _prestige;
-            texts[7].text = "strength - " + _strength;
-            texts[8].text = "intelligence - " + _intelligence;
-            texts[9].text = "dodges - " + _maxDodges;
-            texts[10].text = "health - " + _maxHealth;
-            texts[11].text = "speed - " + _speed;
-            texts[12].text = "attack speed - " + _attackSpeed;
-            texts[13].text = "health regen - " + _healthRegen;
-            texts[14].text = "dodge regen - " + _dodgeRegen;
-            texts[15].text = "armor - " + _armor;
-            texts[16].text = "shield - " + _shield;
+            get
+            {
+                return _prefab;
+            }
 
+            set
+            {
+                _prefab = value;
+            }
         }
+        [SerializeField]
+        string _name;
 
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
 
+            set
+            {
+                _name = value;
+            }
+        }
+        #endregion
 
 
 

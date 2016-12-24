@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
+using Project.CharacterCreation;
 using System.Collections;
 
 namespace Project.StatSystem
 {
     public class baseDiplomat : MonoBehaviour
     {
-        public GameObject player;
-        playerStats stats;
+       
+        CharacterCreationManager TempStats;
 
         float _charisma;
 
@@ -24,7 +25,7 @@ namespace Project.StatSystem
 
         void Start()
         {
-            stats = FindObjectOfType<playerStats>().GetComponent<playerStats>();
+            TempStats = FindObjectOfType<CharacterCreationManager>().GetComponent<CharacterCreationManager>();
             _martial = .05f;
             _learning = .4f;
             _stewardship = .2f;
@@ -36,13 +37,13 @@ namespace Project.StatSystem
 
         public void onActivate()
         {        
-                stats.Martial = _martial;
-                stats.Charisma = _charisma;
-                stats.Learning = _learning;
-                stats.Stewardship = _stewardship;
-                stats.Diplomacy = _diplomacy;
-                stats.Intrigue = _intrigue;
-                stats.Prestige = _prestige;
+                TempStats.Martial = _martial;
+                TempStats.Charisma = _charisma;
+                TempStats.Learning = _learning;
+                TempStats.Stewardship = _stewardship;
+                TempStats.Diplomacy = _diplomacy;
+                TempStats.Intrigue = _intrigue;
+                TempStats.Prestige = _prestige;
         }
     }
 }
