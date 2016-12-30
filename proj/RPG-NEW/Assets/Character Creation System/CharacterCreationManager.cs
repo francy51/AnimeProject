@@ -367,7 +367,7 @@ namespace Project.CharacterCreation
                     stats.Intelligence = Intelligence;
                     stats.maxDodges = MaxDodges;
                     stats.maxHealth = MaxHealth;
-                    stats.Speed = Speed;
+                    stats.WalkSpeed = Speed;
                     stats.AttackSpeed = AttackSpeed;
                     stats.HealthRegen = HealthRegen;
                     stats.DodgeRegen = DodgeRegen;

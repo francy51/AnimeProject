@@ -160,18 +160,18 @@ namespace Project.StatSystem
             }
         }
         [SerializeField]
-        float _speed;
+        float _walkSpeed;
 
-        public float Speed
+        public float WalkSpeed
         {
             get
             {
-                return _speed;
+                return _walkSpeed;
             }
 
             set
             {
-                _speed = value;
+                _walkSpeed = value;
             }
         }
         [SerializeField]
@@ -323,6 +323,22 @@ namespace Project.StatSystem
             set
             {
                 _name = value;
+            }
+
+        }
+        [SerializeField]
+        float _jumpHeight;
+
+        public float JumpHeight
+        {
+            get
+            {
+                return _jumpHeight;
+            }
+
+            set
+            {
+                _jumpHeight = value;
             }
         }
         #endregion

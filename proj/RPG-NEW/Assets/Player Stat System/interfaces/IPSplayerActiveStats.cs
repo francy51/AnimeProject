@@ -5,7 +5,8 @@ namespace Project.StatSystem
 {
     public interface IPSplayerActiveStats
     {
-        float Speed { get; set; }
+        float WalkSpeed { get; set; }
+        float JumpHeight { get; set; }
         int Strength { get; set; }
         int Intelligence { get; set; }
         int Armor { get; set; }
