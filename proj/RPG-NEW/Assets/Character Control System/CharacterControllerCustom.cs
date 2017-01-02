@@ -3,7 +3,7 @@ using System.Collections;
 using Project.StatSystem;
 using System;
 
-namespace Poject.CharacterControl
+namespace Project.CharacterControl
 {
     public class CharacterControllerCustom : MonoBehaviour
     {
@@ -16,7 +16,7 @@ namespace Poject.CharacterControl
         Rigidbody rb;
 
         [SerializeField]
-        float Hrizontal;
+        float Horizontal;
         [SerializeField]
         float Vertical;
         [SerializeField]
@@ -31,6 +31,12 @@ namespace Poject.CharacterControl
         bool isGrounded;
         [SerializeField]
         float Gravity = 10f;
+        [SerializeField]
+        float Rotation;
+        [SerializeField]
+        Quaternion targetRotation;
+
+        CameraController camera;
 
         Ray ray;
 
@@ -43,6 +49,8 @@ namespace Poject.CharacterControl
             WalkSpeed = stats.WalkSpeed;
             JumpSpeed = stats.JumpHeight;
             Displacement = new Vector3();
+            targetRotation = Quaternion.identity;
+            camera = FindObjectOfType<CameraController>().GetComponent<CameraController>();
         }
 
         private void Update()
@@ -61,25 +69,35 @@ namespace Poject.CharacterControl
 
         private void MoveCharacter()
         {
+
+            transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y + Rotation, transform.rotation.z, transform.rotation.w);
             rb.velocity = Displacement;
+
+
+
         }
 
         private void AddInputsTogether()
         {
-            Displacement = new Vector3(Hrizontal, Jump, Vertical);
+            Displacement = new Vector3(Horizontal, Jump, Vertical);
         }
 
         void GatherInput()
         {
 
-            Hrizontal = Input.GetAxis("Horizontal") + (Input.GetAxis("Horizontal") * WalkSpeed);
+            Horizontal = Input.GetAxis("Horizontal") + (Input.GetAxis("Horizontal") * WalkSpeed);
             Vertical = Input.GetAxis("Vertical") + (Input.GetAxis("Vertical") * WalkSpeed);
             Jump = Input.GetAxisRaw("Jump") * JumpSpeed;
+            if (camera.CameraState == 1)
+            {
+                Rotation = Input.GetAxis("Turn");
+
+            }
 
             if (isGrounded)
             {
                 Jump = Input.GetAxisRaw("Jump") * JumpSpeed;
-                print(isGrounded);
+                // print(isGrounded);
             }
 
         }
@@ -93,7 +111,7 @@ namespace Poject.CharacterControl
                 if (hit.collider.tag == "Ground")
                 {
                     isGrounded = true;
-                    print("enter Loop");
+                    //   print("enter Loop");
                 }
             }
             else

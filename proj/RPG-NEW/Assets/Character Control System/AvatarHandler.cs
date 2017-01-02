@@ -24,7 +24,7 @@ namespace Project.CharacterControl
 
         void HandlePrefab()
         {
-            Instantiate(stats.Prefab,this.transform.position,Quaternion.identity, this.transform);
+            Instantiate(stats.Prefab, this.transform.position, Quaternion.identity, this.transform);
             Destroy(stats.Prefab);
             stats.Prefab = this.gameObject;
         }
