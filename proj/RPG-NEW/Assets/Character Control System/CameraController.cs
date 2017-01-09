@@ -7,86 +7,74 @@ namespace Project.CharacterControl
     public class CameraController : MonoBehaviour
     {
 
-        [SerializeField]
-        float Horizontal;
-        [SerializeField]
-        float Vertical;
-        [SerializeField]
-        float Jump;
-        [SerializeField]
-        float yOffset;
-        [SerializeField]
-        float xOffset;
-        [SerializeField]
-        float zOffset;
-        [SerializeField]
-        Vector3 Displacement;
-        [SerializeField]
-        Vector3 curPlayerPos;
-        [SerializeField]
-        GameObject Player;
-        [SerializeField]
-        public int CameraState;
+        public bool OrbitMode;
+        public Transform Target;
+        private float lookSmooth = 0.09f;
+        public Vector3 offsetFromTarget;
+        public float xTilt = 10;
+        public float xRotation, yRotation;
 
-        Rigidbody rb;
-        // Use this for initialization
-        void Start()
+        Vector3 destination = Vector3.zero;
+        CharacterControllerCustom player;
+        float rotateVel = 0;
+
+        public void setCameraTarget(Transform t)
         {
-            Player = GameObject.Find("Player");
-            rb = GetComponent<Rigidbody>();
-            CameraState = 1;
+            Target = t;
+            if (Target != null)
+            {
+                if (Target.GetComponent<CharacterControllerCustom>())
+                {
+                    player = Target.GetComponent<CharacterControllerCustom>();
+                }
+                else
+                    Debug.Log("Target Not Player Errors");
+            }
+            else
+                Debug.Log("No Target");
         }
 
-        // Update is called once per frame
-        void FixedUpdate()
+        private void LateUpdate()
         {
-
-            if (curPlayerPos != Player.transform.position)
+            if (Input.GetKey(KeyCode.Z))
             {
-                CalculateMoveAmount();
-                MovePlayer();
-                curPlayerPos = Player.transform.position;
+                offsetFromTarget.z += Input.GetAxisRaw("Mouse ScrollWheel");
+            }
+            else
+                offsetFromTarget.y += Input.GetAxisRaw("Mouse ScrollWheel");
+
+            MoveToTarget();
+            LookAtTarget();
+        }
+
+        private void LookAtTarget()
+        {
+            if (OrbitMode)
+            {
+
             }
             else
             {
-                Displacement = Vector3.zero;
-                rb.velocity = Vector3.zero;
+                destination = player.TargetRotation * offsetFromTarget;
+                destination += Target.position;
+                transform.position = destination;
             }
         }
 
-        private void MovePlayer()
+        private void MoveToTarget()
         {
-            rb.velocity = Displacement;
-        }
-
-        private void CalculateMoveAmount()
-        {
-            // Camera Move State 1
-            // Classis RPG movement camera system where you move the player with wasdqe and rotate the camera with the mouse.
-            if (CameraState == 1)
+            if (OrbitMode)
             {
-                Horizontal = Player.transform.position.x - transform.position.x;
-                Vertical = Player.transform.position.z - transform.position.z;
-                Jump = Player.transform.position.y - transform.position.y;
-                zOffset += Input.GetAxis("Mouse ScrollWheel");
 
-                //work in progress move camera angle with right mouse button
-                if (Input.GetMouseButtonDown(1))
-                {
-                    float startMousePosX = Input.mousePosition.x;
-                    float startMousePosY = Input.mousePosition.y;
-                    if (Input.GetMouseButton(1))
-                    {
-                        transform.rotation = new Quaternion(transform.rotation.x, transform.position.y + (startMousePosX - Input.mousePosition.x), transform.rotation.z, transform.rotation.w);
-                    }
-                }
-            
-
-                Displacement = Vector3.Lerp(transform.position, new Vector3(Horizontal + xOffset, Jump + yOffset, Vertical + zOffset), 1f);
-                
-
-                
             }
+            else
+            {
+                float eulerYAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, Target.eulerAngles.y, ref rotateVel, lookSmooth);
+                //float eulerXAngle = Mathf.SmoothDampAngle(transform.eulerAngles.x, Target.eulerAngles.x + xTilt, ref rotateVel, lookSmooth);
+                //transform.rotation = Quaternion.Euler(eulerXAngle,eulerYAngle,0);
+                transform.rotation = Quaternion.Euler(transform.eulerAngles.x, eulerYAngle, 0);
+            }
+
         }
     }
 }

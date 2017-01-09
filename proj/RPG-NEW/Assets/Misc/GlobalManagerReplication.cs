@@ -18,7 +18,7 @@ namespace Project.Misc
             }
             else
             {
-                DontDestroyOnLoad(this);
+                DontDestroyOnLoad(this);   
                 GlobalManagerExists = true;
             }
         }

@@ -11,113 +11,132 @@ namespace Project.CharacterControl
         playerStats stats;
 
         [SerializeField]
-        float WalkSpeed;
+        MoveSettings moveSet;
+        [SerializeField]
+        InputSettings inputSet;
+        [SerializeField]
+        PhysicsSettings physicsSet;
 
         Rigidbody rb;
-
         [SerializeField]
-        float Horizontal;
-        [SerializeField]
-        float Vertical;
-        [SerializeField]
-        float Jump;
-        [SerializeField]
-        Vector3 Displacement;
-        [SerializeField]
-        LayerMask Ground;
-        [SerializeField]
-        float JumpSpeed;
-        [SerializeField]
-        bool isGrounded;
-        [SerializeField]
-        float Gravity = 10f;
-        [SerializeField]
-        float Rotation;
-        [SerializeField]
+        float VertInput, HorizInput, TurnInput, JumpInput;
+        CameraController cam;
         Quaternion targetRotation;
 
-        CameraController camera;
 
-        Ray ray;
+        [SerializeField]
+        Vector3 Displacement;
+
+
+        public Quaternion TargetRotation
+        {
+            get
+            {
+                return targetRotation;
+            }
+        }
 
         // Use this for initialization
         void Start()
         {
+            cam = FindObjectOfType<CameraController>().GetComponent<CameraController>();
+            cam.setCameraTarget(transform);
+            Displacement = Vector3.zero;
+            TurnInput = VertInput = HorizInput = JumpInput = 0;
+            targetRotation = transform.rotation;
             rb = GetComponent<Rigidbody>();
-            Physics.gravity = new Vector3(0, -Gravity * rb.mass);
             stats = FindObjectOfType<playerStats>().GetComponent<playerStats>();
-            WalkSpeed = stats.WalkSpeed;
-            JumpSpeed = stats.JumpHeight;
             Displacement = new Vector3();
-            targetRotation = Quaternion.identity;
-            camera = FindObjectOfType<CameraController>().GetComponent<CameraController>();
         }
 
         private void Update()
         {
-            ray = new Ray(transform.position, Vector3.down);
-            checkGrounded();
+            GatherInput();
+            Turn();
         }
 
 
         void FixedUpdate()
         {
-            GatherInput();
-            AddInputsTogether();
-            MoveCharacter();
+            Run();
+            Jump();
+
+            //Move
+            rb.velocity = transform.TransformDirection(Displacement);
         }
 
-        private void MoveCharacter()
+        private void Jump()
         {
+            if (moveSet.MoveState == 0)
+            {
 
-            transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y + Rotation, transform.rotation.z, transform.rotation.w);
-            rb.velocity = Displacement;
-
-
-
-        }
-
-        private void AddInputsTogether()
-        {
-            Displacement = new Vector3(Horizontal, Jump, Vertical);
+                if (JumpInput > 0 && Grounded())
+                {
+                    //Jump up
+                    Displacement.y = moveSet.JumpVel;
+                }
+                else if (JumpInput == 0 && Grounded())
+                {
+                    //grounded so don't add gravity
+                    Displacement.y = 0;
+                }
+                else
+                {
+                    // in the air so add gravity
+                    Displacement.y -= physicsSet.gravity;
+                }
+                    
+            }
         }
 
         void GatherInput()
         {
-
-            Horizontal = Input.GetAxis("Horizontal") + (Input.GetAxis("Horizontal") * WalkSpeed);
-            Vertical = Input.GetAxis("Vertical") + (Input.GetAxis("Vertical") * WalkSpeed);
-            Jump = Input.GetAxisRaw("Jump") * JumpSpeed;
-            if (camera.CameraState == 1)
+            if (moveSet.MoveState == 0)
             {
-                Rotation = Input.GetAxis("Turn");
-
+                //collects the inputs
+                VertInput = Input.GetAxis("Vertical");
+                TurnInput = Input.GetAxis("Turn");
+                JumpInput = Input.GetAxisRaw("Jump");
             }
-
-            if (isGrounded)
-            {
-                Jump = Input.GetAxisRaw("Jump") * JumpSpeed;
-                // print(isGrounded);
-            }
-
         }
 
-        private void checkGrounded()
+        void Run()
         {
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, JumpSpeed))
+            if (moveSet.MoveState == 0)
             {
-                Debug.DrawLine(ray.origin, hit.point, Color.red);
-                if (hit.collider.tag == "Ground")
+                //makes sure that the value is greater than the delay then add the forward input to the displacement
+                if (Mathf.Abs(VertInput) > inputSet.inputDelay)
                 {
-                    isGrounded = true;
-                    //   print("enter Loop");
+                    Displacement.z = VertInput * moveSet.ForwardVel;
+                }
+                else
+                {
+                    Displacement.z = 0f;
                 }
             }
-            else
-            {
-                isGrounded = false;
-            }
+
         }
+
+        void Turn()
+        {
+            if (moveSet.MoveState == 0)
+            {
+
+                //makes sure that the value is greater than the delay then add the turn input to the target rotation
+                if (Mathf.Abs(TurnInput) > inputSet.inputDelay)
+                {
+                    targetRotation *= Quaternion.AngleAxis(moveSet.RotateVel * TurnInput * Time.deltaTime, Vector3.up);
+                    transform.rotation = targetRotation;
+                }
+            }
+
+        }
+
+        //checks if player is grounded
+        bool Grounded()
+        {
+            return Physics.Raycast(transform.position, Vector3.down, moveSet.DistToGround, moveSet.Ground);
+        }
+
     }
 }
