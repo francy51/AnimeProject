@@ -47,6 +47,7 @@ namespace Project.CharacterControl
             rb = GetComponent<Rigidbody>();
             stats = FindObjectOfType<playerStats>().GetComponent<playerStats>();
             Displacement = new Vector3();
+            setInputAxis();
         }
 
         private void Update()
@@ -62,12 +63,12 @@ namespace Project.CharacterControl
             Jump();
 
             //Move
-            rb.velocity = transform.TransformDirection(Displacement);
+            rb.velocity = Camera.main.transform.TransformDirection(Displacement);
         }
 
         private void Jump()
         {
-            if (moveSet.MoveState == 0)
+            if (MoveSettings.MoveState == 0 || MoveSettings.MoveState == 1)
             {
 
                 if (JumpInput > 0 && Grounded())
@@ -85,41 +86,65 @@ namespace Project.CharacterControl
                     // in the air so add gravity
                     Displacement.y -= physicsSet.gravity;
                 }
-                    
+
             }
         }
 
         void GatherInput()
         {
-            if (moveSet.MoveState == 0)
+            VertInput = Input.GetAxis(inputSet.VertAxis);
+            HorizInput = Input.GetAxis(inputSet.HorizAxis);
+            JumpInput = Input.GetAxisRaw(inputSet.JumpAxis);
+            if (MoveSettings.MoveState == 0)
             {
-                //collects the inputs
-                VertInput = Input.GetAxis("Vertical");
-                TurnInput = Input.GetAxis("Turn");
-                JumpInput = Input.GetAxisRaw("Jump");
+                TurnInput = Input.GetAxis(inputSet.TurnAxis);
+            }
+        }
+
+        public void setInputAxis()
+        {
+            //set the axis for each float
+            if (MoveSettings.MoveState == 0)
+            {
+                inputSet.VertAxis = "Vertical";
+                inputSet.HorizAxis = "Horizontal";
+                inputSet.TurnAxis = "Turn";
+                inputSet.JumpAxis = "Jump";
+            }
+            else if (MoveSettings.MoveState == 1)
+            {
+                inputSet.VertAxis = "Vertical";
+                inputSet.HorizAxis = "Turn";
+                inputSet.JumpAxis = "Jump";
+
+                //TODO: figure out how to handle turning
             }
         }
 
         void Run()
         {
-            if (moveSet.MoveState == 0)
+            //makes sure that the value is greater than the delay then add the forward input to the displacement
+            if (Mathf.Abs(VertInput) > inputSet.inputDelay)
             {
-                //makes sure that the value is greater than the delay then add the forward input to the displacement
-                if (Mathf.Abs(VertInput) > inputSet.inputDelay)
-                {
-                    Displacement.z = VertInput * moveSet.ForwardVel;
-                }
-                else
-                {
-                    Displacement.z = 0f;
-                }
+                Displacement.z = VertInput * moveSet.ForwardVel;
             }
-
+            else
+            {
+                Displacement.z = 0f;
+            }
+            if (Mathf.Abs(HorizInput) > inputSet.inputDelay)
+            {
+                Displacement.x = HorizInput * moveSet.ForwardVel;
+            }
+            else
+            {
+                Displacement.x = 0f;
+            }
         }
 
         void Turn()
         {
-            if (moveSet.MoveState == 0)
+            if (MoveSettings.MoveState == 0)
             {
 
                 //makes sure that the value is greater than the delay then add the turn input to the target rotation
@@ -128,6 +153,10 @@ namespace Project.CharacterControl
                     targetRotation *= Quaternion.AngleAxis(moveSet.RotateVel * TurnInput * Time.deltaTime, Vector3.up);
                     transform.rotation = targetRotation;
                 }
+            }
+            if (MoveSettings.MoveState == 1)
+            {
+                //Instert Mouse Movement here
             }
 
         }

@@ -8,5 +8,9 @@ namespace Project.CharacterControl
     public class InputSettings
     {
         public float inputDelay = 0.1f;
+        public string TurnAxis = "Turn";
+        public string HorizAxis = "Horizontal";
+        public string VertAxis = "Vertical";
+        public string JumpAxis = "Jump";
     }
 }

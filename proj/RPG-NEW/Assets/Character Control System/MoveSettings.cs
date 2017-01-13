@@ -7,7 +7,7 @@ namespace Project.CharacterControl
     [System.Serializable]
     public class MoveSettings
     {
-        public int MoveState = 0;
+        public static int MoveState = 0;
         public float ForwardVel = 12;
         public float JumpVel = .75f;
         public float RotateVel = 100;

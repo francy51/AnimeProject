@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using Project.CharacterControl;
 
 namespace Project.menuManager
 {
@@ -10,17 +11,40 @@ namespace Project.menuManager
 
         public GameObject quitConfirmation;
         public GameObject optionsHolder;
+        public GameObject menu;
+        MoveSettings moveset;
+        CharacterControllerCustom player;
+        bool paused;
 
         // Use this for initialization
         void Start()
         {
-            optionsHolder.SetActive(false);       
+            optionsHolder.SetActive(false);
             quitConfirmation.SetActive(false);
         }
 
         public void play()
         {
             SceneManager.LoadSceneAsync(1);
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (paused)
+                {
+                    Time.timeScale = 1f;
+                    menu.SetActive(false);
+                    paused = false;
+                }
+                else if (!paused)
+                {
+                    Time.timeScale = 0f;
+                    menu.SetActive(true);
+                    paused = true;
+                }
+            }
         }
 
 
@@ -51,6 +75,43 @@ namespace Project.menuManager
             optionsHolder.SetActive(false);
         }
 
+        public void ChangeMoveSettings()
+        {
+            
+            if (player == null)
+            {
+                player = FindObjectOfType<CharacterControllerCustom>().GetComponent<CharacterControllerCustom>();
+                if (player == null)
+                {
+                    Debug.Log("No player available");
+                    return;
+                }
+            }
+            switch (MoveSettings.MoveState)
+            {
+                case 0:
+                    print(MoveSettings.MoveState);
+                    MoveSettings.MoveState = 1;
+                    player.setInputAxis();
+                    print(MoveSettings.MoveState);
+                    break;
+                case 1:
+                    print(MoveSettings.MoveState);
+                    MoveSettings.MoveState = 0;
+                    player.setInputAxis();
+                    print(MoveSettings.MoveState);
+                    break;
+                default:
+                    print(MoveSettings.MoveState);
+                    MoveSettings.MoveState = 0;
+                    player.setInputAxis();
+                    print(MoveSettings.MoveState);
+                    break;
+
+
+            }
+
+        }
 
     }
 }
