@@ -156,7 +156,9 @@ namespace Project.CharacterControl
             }
             if (MoveSettings.MoveState == 1)
             {
-                //Instert Mouse Movement here
+                //TODO: Make it so that the player only copies the cameras Y rotation and not everything
+                // This is because when we add the x tilt on camera the camera will copy that to.
+                transform.rotation = Camera.main.transform.rotation;
             }
 
         }

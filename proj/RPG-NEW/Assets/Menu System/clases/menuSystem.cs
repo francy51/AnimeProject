@@ -9,6 +9,7 @@ namespace Project.menuManager
     public class menuSystem : MonoBehaviour
     {
 
+        public GameObject crosshair;
         public GameObject quitConfirmation;
         public GameObject optionsHolder;
         public GameObject menu;
@@ -77,7 +78,7 @@ namespace Project.menuManager
 
         public void ChangeMoveSettings()
         {
-            
+
             if (player == null)
             {
                 player = FindObjectOfType<CharacterControllerCustom>().GetComponent<CharacterControllerCustom>();
@@ -92,18 +93,42 @@ namespace Project.menuManager
                 case 0:
                     print(MoveSettings.MoveState);
                     MoveSettings.MoveState = 1;
+                    try
+                    {
+                        GameObject.Find("crosshair").SetActive(true);
+                    }
+                    catch (System.Exception)
+                    {
+                        print("No crosshair found.");
+                    }
                     player.setInputAxis();
                     print(MoveSettings.MoveState);
                     break;
                 case 1:
                     print(MoveSettings.MoveState);
                     MoveSettings.MoveState = 0;
+                    try
+                    {
+                        GameObject.Find("crosshair").SetActive(false);
+                    }
+                    catch (System.Exception)
+                    {
+                        print("No crosshair found.");
+                    }
                     player.setInputAxis();
                     print(MoveSettings.MoveState);
                     break;
                 default:
                     print(MoveSettings.MoveState);
                     MoveSettings.MoveState = 0;
+                    try
+                    {
+                        GameObject.Find("crosshair").SetActive(false);
+                    }
+                    catch (System.Exception)
+                    {
+                        print("No crosshair found.");
+                    }
                     player.setInputAxis();
                     print(MoveSettings.MoveState);
                     break;

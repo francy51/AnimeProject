@@ -16,7 +16,7 @@ namespace Project.CharacterControl
         public float mouseSensitivity;
         float yaw;
         float pitch;
-        public Vector2 minMaxPitch = new Vector2(-20,85);
+        public Vector2 minMaxPitch = new Vector2(10, 50);
         public float rotationSmoothTime = 0.12f;
         Vector3 currentRotation;
         Vector3 rotationSmoothVelocity;
@@ -46,14 +46,12 @@ namespace Project.CharacterControl
         {
             if (MoveSettings.MoveState == 1)
             {
-                yaw -= Input.GetAxis("Mouse X") * mouseSensitivity;
-                pitch += Input.GetAxis("Mouse Y") * mouseSensitivity;
-                pitch = Mathf.Clamp(pitch, minMaxPitch.x, minMaxPitch.y);
-
-                currentRotation = Vector3.SmoothDamp(currentRotation, new Vector3(pitch, yaw), ref rotationSmoothVelocity, rotationSmoothTime);
+                yaw += Input.GetAxis("Mouse X") * mouseSensitivity;
+               
+                //TODO: Add an x tilt so that no matter how high the player zooms up you can still see the player
+                currentRotation = new Vector3(0, yaw);
                 transform.eulerAngles = currentRotation;
-                transform.position = player.transform.position + transform.forward * offsetFromTarget.z;
-
+                transform.position = Target.position + transform.forward * offsetFromTarget.z + Vector3.up * offsetFromTarget.y;
             }
         }
 
