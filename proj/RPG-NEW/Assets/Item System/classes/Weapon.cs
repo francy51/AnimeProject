@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using Project.MobSystem;
 
 namespace Project.ItemSystem
 {
     [Serializable]
-    public class Weapon : IISWeapon
+    public class Weapon : MonoBehaviour, IISWeapon
     {
 
         public Weapon()
@@ -44,6 +45,10 @@ namespace Project.ItemSystem
         string _type;
         [SerializeField]
         Sprite _icon;
+        [SerializeField]
+        bool _isranged;
+        [SerializeField]
+        float _range;
 
         public int damage
         {
@@ -146,6 +151,49 @@ namespace Project.ItemSystem
             set
             {
                 _icon = value;
+            }
+        }
+
+        public bool isRange
+        {
+            get
+            {
+                return _isranged;
+            }
+
+            set
+            {
+                _isranged = value;
+            }
+        }
+
+        public float range
+        {
+            get
+            {
+                return _range;
+            }
+
+            set
+            {
+                _range = value;
+            }
+        }
+
+        public void Attack()
+        {
+            if (_isranged)
+            {
+                RaycastHit hit;
+                if ( Physics.Raycast(transform.position,Vector3.forward,out hit,_range))
+                {
+                    if (hit.collider.tag == "MOB")
+                    {
+                        GameObject mob = hit.collider.gameObject;
+                        EnemyHealth targetHp = mob.GetComponent<EnemyHealth>();
+                        targetHp.health -= _damage; 
+                    }
+                }
             }
         }
     }

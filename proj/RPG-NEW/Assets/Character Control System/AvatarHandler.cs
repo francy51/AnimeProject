@@ -25,6 +25,8 @@ namespace Project.CharacterControl
         void HandlePrefab()
         {
             Instantiate(stats.Prefab, this.transform.position, Quaternion.identity, this.transform);
+            CharacterControllerCustom CharacterControllerCust = GetComponent<CharacterControllerCustom>();            
+            GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().runtimeAnimatorController = CharacterControllerCust.Locomotion;
             Destroy(stats.Prefab);
             stats.Prefab = this.gameObject;
         }

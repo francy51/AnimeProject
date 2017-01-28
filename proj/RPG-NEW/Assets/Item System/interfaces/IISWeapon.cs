@@ -9,6 +9,9 @@ namespace Project.ItemSystem
         int damage { get; set; }
         float penetration { get; set; }
         string type { get; set; }
+        void Attack();
+        bool isRange { get; set; }
+        float range { get; set; }
 
 
     }

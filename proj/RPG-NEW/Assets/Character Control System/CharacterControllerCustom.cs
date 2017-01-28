@@ -17,12 +17,19 @@ namespace Project.CharacterControl
         [SerializeField]
         PhysicsSettings physicsSet;
 
+        [SerializeField]
+        Animator playerAnimController;
+
+        [SerializeField]
+        public RuntimeAnimatorController Locomotion;
+
         Rigidbody rb;
         [SerializeField]
         float VertInput, HorizInput, TurnInput, JumpInput;
         CameraController cam;
         Quaternion targetRotation;
 
+        GameObject playerPrefab;
 
         [SerializeField]
         Vector3 Displacement;
@@ -36,6 +43,19 @@ namespace Project.CharacterControl
             }
         }
 
+        public Animator PlayerAnimController
+        {
+            get
+            {
+                return playerAnimController;
+            }
+
+            set
+            {
+                playerAnimController = value;
+            }
+        }
+
         // Use this for initialization
         void Start()
         {
@@ -45,10 +65,17 @@ namespace Project.CharacterControl
             TurnInput = VertInput = HorizInput = JumpInput = 0;
             targetRotation = transform.rotation;
             rb = GetComponent<Rigidbody>();
-            stats = FindObjectOfType<playerStats>().GetComponent<playerStats>();
+            moveSet = new MoveSettings();
+            inputSet = new InputSettings();
+            physicsSet = new PhysicsSettings();
+            // stats = FindObjectOfType<playerStats>().GetComponent<playerStats>();
             Displacement = new Vector3();
+
             setInputAxis();
+
         }
+
+
 
         private void Update()
         {
@@ -140,6 +167,10 @@ namespace Project.CharacterControl
             {
                 Displacement.x = 0f;
             }
+
+
+            //        playerAnimController.SetFloat("Speed", Displacement.x);
+
         }
 
         void Turn()
