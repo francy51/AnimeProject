@@ -33,21 +33,25 @@ namespace Project.menuManager
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (paused)
-                {
-                    Time.timeScale = 1f;
-                    menu.SetActive(false);
-                    paused = false;
-                }
-                else if (!paused)
-                {
-                    Time.timeScale = 0f;
-                    menu.SetActive(true);
-                    paused = true;
-                }
+                switchPause();
             }
         }
 
+        void switchPause()
+        {
+            if (paused)
+            {
+                Time.timeScale = 1f;
+                menu.SetActive(false);
+                paused = false;
+            }
+            else if (!paused)
+            {
+                Time.timeScale = 0f;
+                menu.SetActive(true);
+                paused = true;
+            }
+        }
 
         public void Quit()
         {
@@ -91,7 +95,7 @@ namespace Project.menuManager
             switch (MoveSettings.MoveState)
             {
                 case 0:
-                    print(MoveSettings.MoveState);
+                    //print(MoveSettings.MoveState);
                     MoveSettings.MoveState = 1;
                     try
                     {
@@ -101,11 +105,13 @@ namespace Project.menuManager
                     {
                         print("No crosshair found.");
                     }
+                    closeOptions();
+                    switchPause();
                     player.setInputAxis();
-                    print(MoveSettings.MoveState);
+                    //print(MoveSettings.MoveState);
                     break;
                 case 1:
-                    print(MoveSettings.MoveState);
+                    //print(MoveSettings.MoveState);
                     MoveSettings.MoveState = 0;
                     try
                     {
@@ -115,22 +121,26 @@ namespace Project.menuManager
                     {
                         print("No crosshair found.");
                     }
+                    closeOptions();
+                    switchPause();
                     player.setInputAxis();
-                    print(MoveSettings.MoveState);
+                    //print(MoveSettings.MoveState);
                     break;
                 default:
-                    print(MoveSettings.MoveState);
-                    MoveSettings.MoveState = 0;
+                    //print(MoveSettings.MoveState);
+                    MoveSettings.MoveState = 1;
                     try
                     {
                         GameObject.Find("crosshair").SetActive(false);
+                        closeOptions();
+                        switchPause();
                     }
                     catch (System.Exception)
                     {
                         print("No crosshair found.");
                     }
                     player.setInputAxis();
-                    print(MoveSettings.MoveState);
+                    //print(MoveSettings.MoveState);
                     break;
 
 

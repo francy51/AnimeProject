@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Project.CharacterCreation;
+
 using System.Collections;
 
 
@@ -8,7 +8,6 @@ namespace Project.StatSystem
     public class baseSteward : MonoBehaviour
     {
 
-        CharacterCreationManager TempStats;
 
         float _charisma;
 
@@ -26,7 +25,6 @@ namespace Project.StatSystem
 
         void Start()
         {
-            TempStats = FindObjectOfType<CharacterCreationManager>().GetComponent<CharacterCreationManager>();
             _martial = .05f;
             _learning = .3f;
             _stewardship = .5f;
@@ -36,16 +34,16 @@ namespace Project.StatSystem
             _prestige = 50;
         }
 
-        public void onActivate()
-        {
-            TempStats.Martial = _martial;
-            TempStats.Charisma = _charisma;
-            TempStats.Learning = _learning;
-            TempStats.Stewardship = _stewardship;
-            TempStats.Diplomacy = _diplomacy;
-            TempStats.Intrigue = _intrigue;
-            TempStats.Prestige = _prestige;
-        }
+        //public void onActivate()
+        //{
+        //    TempStats.Martial = _martial;
+        //    TempStats.Charisma = _charisma;
+        //    TempStats.Learning = _learning;
+        //    TempStats.Stewardship = _stewardship;
+        //    TempStats.Diplomacy = _diplomacy;
+        //    TempStats.Intrigue = _intrigue;
+        //    TempStats.Prestige = _prestige;
+        //}
 
 
     }

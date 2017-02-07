@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using Project.StatSystem;
 
 namespace Project.CharacterControl
 {
@@ -25,6 +26,8 @@ namespace Project.CharacterControl
         Vector3 destination = Vector3.zero;
         CharacterControllerCustom player;
         float rotateVel = 0;
+
+        playerStats stats;
 
         public void setCameraTarget(Transform t)
         {
@@ -53,6 +56,11 @@ namespace Project.CharacterControl
                 transform.eulerAngles = currentRotation;
                 transform.position = Target.position + transform.forward * offsetFromTarget.z + Vector3.up * offsetFromTarget.y;
             }
+        }
+
+        private void Start()
+        {
+            target = GameObject.FindGameObjectWithTag("Player").transform;
         }
 
         private void LateUpdate()

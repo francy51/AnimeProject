@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
-using Project.MobSystem;
+
 
 namespace Project.ItemSystem
 {
@@ -190,8 +190,8 @@ namespace Project.ItemSystem
                     if (hit.collider.tag == "MOB")
                     {
                         GameObject mob = hit.collider.gameObject;
-                        EnemyHealth targetHp = mob.GetComponent<EnemyHealth>();
-                        targetHp.health -= _damage; 
+                        //get mob health script
+                        //targetHp.health -= _damage; 
                     }
                 }
             }
