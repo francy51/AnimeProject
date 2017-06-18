@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using Project.CharacterControl;
+
 
 namespace Project.menuManager
 {
@@ -13,8 +13,6 @@ namespace Project.menuManager
         public GameObject quitConfirmation;
         public GameObject optionsHolder;
         public GameObject menu;
-        MoveSettings moveset;
-        CharacterControllerCustom player;
         bool paused;
 
         // Use this for initialization
@@ -82,69 +80,6 @@ namespace Project.menuManager
 
         public void ChangeMoveSettings()
         {
-
-            if (player == null)
-            {
-                player = FindObjectOfType<CharacterControllerCustom>().GetComponent<CharacterControllerCustom>();
-                if (player == null)
-                {
-                    Debug.Log("No player available");
-                    return;
-                }
-            }
-            switch (MoveSettings.MoveState)
-            {
-                case 0:
-                    //print(MoveSettings.MoveState);
-                    MoveSettings.MoveState = 1;
-                    try
-                    {
-                        GameObject.Find("crosshair").SetActive(true);
-                    }
-                    catch (System.Exception)
-                    {
-                        print("No crosshair found.");
-                    }
-                    closeOptions();
-                    switchPause();
-                    player.setInputAxis();
-                    //print(MoveSettings.MoveState);
-                    break;
-                case 1:
-                    //print(MoveSettings.MoveState);
-                    MoveSettings.MoveState = 0;
-                    try
-                    {
-                        GameObject.Find("crosshair").SetActive(false);
-                    }
-                    catch (System.Exception)
-                    {
-                        print("No crosshair found.");
-                    }
-                    closeOptions();
-                    switchPause();
-                    player.setInputAxis();
-                    //print(MoveSettings.MoveState);
-                    break;
-                default:
-                    //print(MoveSettings.MoveState);
-                    MoveSettings.MoveState = 1;
-                    try
-                    {
-                        GameObject.Find("crosshair").SetActive(false);
-                        closeOptions();
-                        switchPause();
-                    }
-                    catch (System.Exception)
-                    {
-                        print("No crosshair found.");
-                    }
-                    player.setInputAxis();
-                    //print(MoveSettings.MoveState);
-                    break;
-
-
-            }
 
         }
 

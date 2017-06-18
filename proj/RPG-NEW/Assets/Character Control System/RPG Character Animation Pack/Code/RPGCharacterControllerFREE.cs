@@ -56,10 +56,18 @@ public class RPGCharacterControllerFREE : MonoBehaviour
     Vector3 newVelocity;
 
     //Weapon and Shield
-    private Weapon weapon;
+    [SerializeField]
+    private Weapon weaponRight;
+    private IISObject LeftObj;
+    public InGameWeaponDB wepDB;
     int rightWeapon = 0;
     int leftWeapon = 0;
     bool isRelax = false;
+    [SerializeField]
+    GameObject leftEquip;
+    [SerializeField]
+    GameObject rightEquip;
+    public LayerMask attackMask;
 
     //isStrafing/action variables
     bool canAction = true;
@@ -77,8 +85,9 @@ public class RPGCharacterControllerFREE : MonoBehaviour
     int maxRoalCharges;
     float cd;
 
-    //weapon ref
-    public List<Weapon> wepList;
+    //Inventory
+    [SerializeField]
+    public List<IISObject> inventory;
 
     #endregion
 
@@ -90,6 +99,19 @@ public class RPGCharacterControllerFREE : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
         curRollCharges = maxRoalCharges;
+        if (weaponRight == null)
+        {
+            weaponRight = new Weapon();
+            weaponRight.weaponType = WeaponType.UNARMED;
+        }
+        inventory = new List<IISObject>();
+        wepDB = GameObject.FindObjectOfType<InGameWeaponDB>();
+        weaponRight = wepDB.getWeapon("Hand");
+    }
+
+    void Awake()
+    {
+
     }
 
     #endregion
@@ -175,6 +197,7 @@ public class RPGCharacterControllerFREE : MonoBehaviour
 
     void FixedUpdate()
     {
+
         CheckForGrounded();
         //apply gravity force
         rb.AddForce(0, gravity, 0, ForceMode.Acceleration);
@@ -451,16 +474,18 @@ public class RPGCharacterControllerFREE : MonoBehaviour
     {
         if (canAction)
         {
-            if (weapon.weaponType == WeaponType.UNARMED)
+            if (weaponRight.weaponType == WeaponType.UNARMED)
             {
                 int maxAttacks = 3;
                 int attackNumber = 0;
                 if (attackSide == 1 || attackSide == 3)
                 {
+                    AttackRay();
                     attackNumber = Random.Range(3, maxAttacks);
                 }
                 else if (attackSide == 2)
                 {
+                    AttackRay();
                     attackNumber = Random.Range(6, maxAttacks + 3);
                 }
                 if (isGrounded)
@@ -470,10 +495,12 @@ public class RPGCharacterControllerFREE : MonoBehaviour
                         animator.SetTrigger("Attack" + (attackNumber).ToString() + "Trigger");
                         if (leftWeapon == 12 || leftWeapon == 14 || rightWeapon == 13 || rightWeapon == 15)
                         {
+                            AttackRay();
                             StartCoroutine(_LockMovementAndAttack(0, .75f));
                         }
                         else
                         {
+                            AttackRay();
                             StartCoroutine(_LockMovementAndAttack(0, .6f));
                         }
                     }
@@ -518,7 +545,7 @@ public class RPGCharacterControllerFREE : MonoBehaviour
     //3 = Dual
     void CastAttack(int attackSide)
     {
-        if (weapon.weaponType == WeaponType.UNARMED)
+        if (weaponRight.weaponType == WeaponType.UNARMED)
         {
             int maxAttacks = 3;
             if (attackSide == 1)
@@ -718,7 +745,7 @@ public class RPGCharacterControllerFREE : MonoBehaviour
         {
             if (cd < 1f)
             {
-                cd += Time.deltaTime/10;
+                cd += Time.deltaTime / 10;
             }
             else
             {
@@ -728,6 +755,38 @@ public class RPGCharacterControllerFREE : MonoBehaviour
         }
     }
 
+    void AttackRay()
+    {
+        Ray R = new Ray(transform.position, transform.forward);
+        RaycastHit hit;
+        if (Physics.Raycast(R, out hit, weaponRight.range, attackMask))
+        {
+            if (hit.collider.GetComponent<MobHealth>())
+            {
+                hit.collider.GetComponent<MobHealth>().TakeDamage(weaponRight.damage);
+            }
+            Debug.DrawRay(transform.position, hit.point);
+        }
+    }
+
     #endregion
 
+    #region Tests
+
+
+    public void testWeapon()
+    {
+        weaponRight = wepDB.getWeapon("Blade Revolver");
+        Instantiate(weaponRight.prefab, rightEquip.transform.position, rightEquip.transform.rotation, rightEquip.transform);
+    }
+
+    public void testInventory()
+    {
+        var obj = wepDB.getWeapon("Blade Revolver");
+        inventory.Add(obj);
+    }
+
+
+
+    #endregion
 }

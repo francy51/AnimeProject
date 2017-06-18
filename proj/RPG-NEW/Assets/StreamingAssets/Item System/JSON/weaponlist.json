@@ -1,3 +1,1 @@
-{
-    "weaponList": []
-}
+{"weapon":[{"_name":"Hand","_damage":10,"_weight":5,"_prefab":{"instanceID":0},"_quality":{"_border":{"instanceID":0},"_name":""},"_penetration":10.0,"_icon":{"instanceID":0},"_isranged":false,"_range":1.0,"_wepType":0},{"_name":"Blade Revolver","_damage":10,"_weight":5,"_prefab":{"instanceID":9960},"_quality":{"_border":{"instanceID":0},"_name":""},"_penetration":10.0,"_icon":{"instanceID":0},"_isranged":false,"_range":1.0,"_wepType":0}]}
